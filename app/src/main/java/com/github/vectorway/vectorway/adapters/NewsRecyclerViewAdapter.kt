@@ -49,7 +49,6 @@ class NewsRecyclerViewAdapter(private val DataList: ArrayList<NewsData>) : Recyc
         return DataList.size
     }
 
-
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal var imageNews: ImageView
         internal var textNews: TextView

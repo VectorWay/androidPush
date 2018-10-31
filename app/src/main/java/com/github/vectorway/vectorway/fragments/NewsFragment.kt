@@ -16,6 +16,7 @@ class NewsFragment: Fragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_news, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val listOfNewsData: ArrayList<NewsData> = ArrayList()
         val news1 = NewsData("https://pp.userapi.com/c850720/v850720981/2db47/GThVanwPkeM.jpg",
@@ -45,4 +46,5 @@ class NewsFragment: Fragment(){
         recyclerViewAdapterNews = NewsRecyclerViewAdapter(listOfNewsData)
         recylerViewNews.adapter = recyclerViewAdapterNews
     }
+
 }

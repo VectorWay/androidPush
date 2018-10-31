@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
 class SplashScreen : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -13,8 +12,10 @@ class SplashScreen : AppCompatActivity() {
         routeToOtherActivity()
         finish()
     }
+
     private fun routeToOtherActivity(){
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
     }
+
 }
