@@ -1,3 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">VectorWay</string>
+    <string name="title_news">Новости</string>
+    <string name="title_members">Участники</string>
+    <string name="yes">УЧАСТВУЮ!</string>
+    <string name="no">НЕ УЧАСТВУЮ</string>
 </resources>
