@@ -28,4 +28,5 @@ class MembersFragment: Fragment(){
         recyclerViewAdapterMembers = MembersRecycleViewAdapter(listOfMemberData)
         recylerViewMembers.adapter = recyclerViewAdapterMembers
     }
+
 }
