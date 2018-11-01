@@ -17,8 +17,11 @@ import com.github.vectorway.vectorway.R
 import com.github.vectorway.vectorway.data.NewsData
 
 
-class NewsRecyclerViewAdapter(private val DataList: ArrayList<NewsData>) : RecyclerView.Adapter<NewsRecyclerViewAdapter.MyViewHolder>() {
+class NewsRecyclerViewAdapter(private val Datalist: ArrayList<NewsData>) : RecyclerView.Adapter<NewsRecyclerViewAdapter.MyViewHolder>() {
+    var listNews: ArrayList<NewsData> = Datalist
     var context: Context? = null
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_view_item_news, parent, false)
@@ -26,27 +29,32 @@ class NewsRecyclerViewAdapter(private val DataList: ArrayList<NewsData>) : Recyc
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        Picasso.get().load(DataList[position].imageUrl).resize(1200,700).centerCrop().into(holder.imageNews)
-        holder.textNews.text = DataList[position].newsText
-        holder.newsTitle.text = DataList[position].newsTitle
-        if(DataList[position].isChoose){
-            holder.textBtnAgree.text = DataList[position].textBtnAgree
-            holder.textBtnDisagree.text = DataList[position].textBtnDisagree
+        Picasso.get().load(listNews[position].imageUrl).resize(1200,700).centerCrop().into(holder.imageNews)
+        holder.textNews.text = listNews[position].newsText
+        holder.newsTitle.text = listNews[position].newsTitle
+        if(listNews[position].isChoose){
+            holder.textBtnAgree.text = listNews[position].textBtnAgree
+            holder.textBtnDisagree.text = listNews[position].textBtnDisagree
         }
         else{
             holder.textBtnAgree.visibility = View.GONE
             holder.textBtnDisagree.visibility = View.GONE
         }
-        if(DataList[position].cardLinkToNews!=null) {
+        if(listNews[position].cardLinkToNews!=null) {
             holder.cardViewClick.setOnClickListener {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(DataList[position].cardLinkToNews))
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(listNews[position].cardLinkToNews))
                 context!!.startActivity(browserIntent)
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return DataList.size
+        return listNews.size
+    }
+
+    fun UpdateList(newData : ArrayList<NewsData>){
+        listNews = newData
+        notifyDataSetChanged()
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

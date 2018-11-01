@@ -3,13 +3,14 @@ package com.github.vectorway.vectorway.fragments
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.vectorway.vectorway.R
 import com.github.vectorway.vectorway.adapters.NewsRecyclerViewAdapter
 import com.github.vectorway.vectorway.data.NewsData
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_news.*
 
 class NewsFragment: Fragment(){
@@ -18,33 +19,30 @@ class NewsFragment: Fragment(){
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val listOfNewsData: ArrayList<NewsData> = ArrayList()
-        val news1 = NewsData("https://pp.userapi.com/c850720/v850720981/2db47/GThVanwPkeM.jpg",
-            "Контест!",
-            "Наше сообщество проводит первый контест! Может именно ты станешь лучшим!",
-            true,
-            "УЧАСТВУЮ!",
-            "НЕ УЧАСТВУЮ",
-            "https://vk.com/itvectorsoc?w=wall-120211608_455")
-        val news2 = NewsData("https://pp.userapi.com/c849528/v849528096/90bb8/-QD2buoWM_Y.jpg",
-            "СТРИМ!!!",
-            "Как вы относитесь к стримам?\n" +
-                    "Есть мысль провести сегодня в 20:00 небольшой(часа полтора) ламповый стрим с Тимом, чтобы показать пример разработки небольшого Android приложения",
-            false,
-            null,
-            null,
-            "https://vk.com/away.php?to=https%3A%2F%2Fwww.twitch.tv%2Ftimtimdotqz&cc_key=")
-        val news3 = NewsData("https://i.ytimg.com/vi/eFK37RBsrUY/maxresdefault.jpg",
-            "waywayway",
-            "sdasfdfdfsdfsd")
-        listOfNewsData.add(news1)
-        listOfNewsData.add(news2)
-        listOfNewsData.add(news3)
+        var listOfNewsData: ArrayList<NewsData> = ArrayList()
+        val recyclerViewAdapterNews = NewsRecyclerViewAdapter(listOfNewsData)
+
+        val myRef: DatabaseReference = FirebaseDatabase.getInstance().getReference()
+
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val t = object : GenericTypeIndicator<ArrayList<NewsData>>() {}
+                listOfNewsData = dataSnapshot.child("events").getValue<ArrayList<NewsData>>(t)!!
+
+                Log.d("MyActivityMain", "Value is: " + listOfNewsData.toString())
+
+
+                recyclerViewAdapterNews.UpdateList(listOfNewsData)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("FAILED CONECTION", "Failed to read value.")
+            }
+        })
+
+
         val layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
-        val recyclerViewAdapterNews: RecyclerView.Adapter<*>
         recylerViewNews.layoutManager = layoutManager
-        recyclerViewAdapterNews = NewsRecyclerViewAdapter(listOfNewsData)
         recylerViewNews.adapter = recyclerViewAdapterNews
     }
-
 }
