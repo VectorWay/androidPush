@@ -31,10 +31,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setLogo(R.drawable.logo)
         title = getText(R.string.title_news)
-
         toolbar.setTitleTextColor(R.color.colorPrimary)
         toolbar.setTitleMargin(70,1,1,1)
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         viewPager.setPagingEnabled(false)
         val pagerAdapter = BottomBarAdapter(supportFragmentManager)
         val fragmentMembers = MembersFragment()
@@ -43,11 +42,10 @@ class MainActivity : AppCompatActivity() {
         pagerAdapter.addFragments(fragmentMembers)
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = 0
-
-        RequestBootPermission()
+        requestBootPermission()
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {  item ->
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {  item ->
         when (item.itemId) {
             R.id.navigation_news -> {
                  viewPager.currentItem = 0
@@ -63,24 +61,24 @@ class MainActivity : AppCompatActivity() {
         false
     }
 
-    private fun RequestBootPermission() {
+    private fun requestBootPermission() {
         val manufacturer = "xiaomi"
 
         if (manufacturer.equals(android.os.Build.MANUFACTURER, ignoreCase = true)) {
-            val chinaPhonePermission = ReadDataFromPhone("China_Phone_Permission")
+            val chinaPhonePermission = readDataFromPhone("China_Phone_Permission")
             if (chinaPhonePermission === "error" || chinaPhonePermission === "BOOT PERMISSION 0") {
                 AlertDialog.Builder(this).setTitle("Требуются права доступа").setMessage("Счастливые обладатели xiaomi должны включить права autostart для " +
                         "данного приложения. Эти права нужны для своевременной доставки пуш уведомлений. " +
                         "Нажмите 'oк' чтобы перейти в настройки безопасности xiaomi и передвиньте ползунок " +
                         "у нашего приложения.").setPositiveButton("ok") { dialog, which ->
-                    WriteDataOnPhone("BOOT PERMISSION 1", "China_Phone_Permission")
+                    writeDataOnPhone("BOOT PERMISSION 1", "China_Phone_Permission")
                     val intent = Intent()
                     intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                     val uri = Uri.fromParts("package", packageName, null)
                     intent.data = uri
                     startActivity(intent)
                 }.setNegativeButton("cancel") { dialog, which ->
-                    WriteDataOnPhone("BOOT PERMISSION 0", "China_Phone_Permission")
+                    writeDataOnPhone("BOOT PERMISSION 0", "China_Phone_Permission")
                     dialog.dismiss()
                 }.create().show()
             }
@@ -97,7 +95,7 @@ class MainActivity : AppCompatActivity() {
      * @param output строка, которую надо вывести
      * @param filename Имя файла, в который надо вывести
      */
-    private fun WriteDataOnPhone(output: String, filename: String): Int {
+    private fun writeDataOnPhone(output: String, filename: String): Int {
         try {
             val bw = BufferedWriter(OutputStreamWriter(openFileOutput(filename, Context.MODE_PRIVATE)))
             bw.write(output)
@@ -115,7 +113,7 @@ class MainActivity : AppCompatActivity() {
      *
      * @param filename откуда читаем данные
      */
-    private fun ReadDataFromPhone(filename: String): String {
+    private fun readDataFromPhone(filename: String): String {
         var output = ""
         try {
             val br = BufferedReader(InputStreamReader(openFileInput(filename)))
