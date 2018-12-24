@@ -5,10 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.util.Log
 import com.github.vectorway.vectorway.adapters.BottomBarAdapter
 import com.github.vectorway.vectorway.fragments.MembersFragment
@@ -16,6 +12,10 @@ import com.github.vectorway.vectorway.fragments.NewsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.*
 import android.provider.Settings
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
 
 
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.setLogo(R.drawable.logo)
         title = getText(R.string.title_news)
         toolbar.setTitleTextColor(R.color.colorPrimary)
-        toolbar.setTitleMargin(70,1,1,1)
+        toolbar.setTitleMargin(70, 1, 1, 1)
         navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
         viewPager.setPagingEnabled(false)
         val pagerAdapter = BottomBarAdapter(supportFragmentManager)
@@ -45,10 +45,10 @@ class MainActivity : AppCompatActivity() {
         requestBootPermission()
     }
 
-    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener {  item ->
+    private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_news -> {
-                 viewPager.currentItem = 0
+                viewPager.currentItem = 0
                 title = getText(R.string.title_news)
                 return@OnNavigationItemSelectedListener true
             }

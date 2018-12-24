@@ -1,8 +1,8 @@
 package com.github.vectorway.vectorway.adapters
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import com.github.vectorway.vectorway.adapters.SmartFragmentStatePagerAdapter
+
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 
 class BottomBarAdapter(fragmentManager: FragmentManager?) : SmartFragmentStatePagerAdapter(fragmentManager) {
     private val fragments: MutableList<Fragment> = ArrayList()

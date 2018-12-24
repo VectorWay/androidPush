@@ -1,12 +1,12 @@
 package com.github.vectorway.vectorway.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.vectorway.vectorway.R
 import com.github.vectorway.vectorway.adapters.MembersRecycleViewAdapter
 import com.github.vectorway.vectorway.data.MemberData
@@ -22,7 +22,7 @@ class MembersFragment: Fragment(){
         val member1 = MemberData("https://www.biography.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cg_face%2Cq_auto:good%2Cw_300/MTE5NDg0MDU1MDY3MDY3OTE5/freddie-mercury-9406228-1-402.jpg",
             "Фронтэнд")
         listOfMemberData.add(member1)
-        val layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL,false)
+        val layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL,false)
         val recyclerViewAdapterMembers: RecyclerView.Adapter<*>
         recylerViewMembers.layoutManager = layoutManager
         recyclerViewAdapterMembers = MembersRecycleViewAdapter(listOfMemberData)

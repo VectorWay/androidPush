@@ -1,12 +1,13 @@
 package com.github.vectorway.vectorway.fragments
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.vectorway.vectorway.R
 import com.github.vectorway.vectorway.adapters.NewsRecyclerViewAdapter
 import com.github.vectorway.vectorway.data.NewsData
@@ -41,7 +42,7 @@ class NewsFragment: Fragment(){
         })
 
 
-        val layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+        val layoutManager = LinearLayoutManager(activity,RecyclerView.VERTICAL,false)
         recylerViewNews.layoutManager = layoutManager
         recylerViewNews.adapter = recyclerViewAdapterNews
     }
